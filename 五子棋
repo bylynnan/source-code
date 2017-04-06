@@ -1,0 +1,133 @@
+#include <stdio.h>
+#define size 17
+void print(char a[][size]);
+void get(char a[][size]);
+void set(char a[][size]);
+int judge(char a[][size], char A);
+int main()
+{
+	char a[size][size];
+	set(a);
+	get(a);
+	return 0;
+}
+void set(char a[][size])
+{
+	int m, n;
+	for (m = 0; m<size; m++)
+		for (n = 0; n < size; n++)
+		{
+			if (m==n|| m ==size - 1 - n)
+			{
+				a[m][n] = '$';
+		    }
+			else
+			a[m][n] = '#';
+			printf("%-3c", a[m][n]);
+			if (n == size - 1)
+				printf("%3d\n",m+1);
+		}
+	for (int i = 1; i < size + 1; i++)
+		printf("%-3d", i);
+	printf("\n");
+}
+void print(char a[][size])
+{
+	int i, j;
+	for (i = 0; i<size; i++)
+	{
+		for (j = 0; j<size; j++)
+		{
+			printf("%-3c", a[i][j]);
+			if (j == size - 1)
+				printf("%3d\n",i+1);
+		}
+	}
+	for (int o = 1; o< size + 1; o++)
+		printf("%-3d", o);
+	printf("\n");
+}
+void get(char a[][size])
+{
+	int i, j, k;
+	k = 0;
+	while (k < size*size)
+	{
+		if (k % 2 == 0)
+		{
+			printf("请执白子同学落子,确定棋子的行数和列数,逗号分隔：");
+			scanf("%d,%d", &i, &j);
+			while (1)
+			{
+				if (i > 0 && i < size + 1 && j>0 && j < size + 1 && a[i - 1][j - 1] != 'O'&&a[i - 1][j - 1] != 'X')
+				{
+					a[i - 1][j - 1] = 'O';
+					break;
+				}
+				else
+				{
+					printf("输入正确值");
+					scanf("%d,%d", &i, &j);
+				}
+			}
+			k++;
+			print(a);
+			judge(a, 'O');
+			printf("\n");
+		}
+		else
+		{
+			printf("请执黑子同学落子,确定棋子的行数和列数,逗号分隔：");
+			scanf("%d,%d", &i, &j);
+			while (1)
+			{
+				if (i > 0 && i < size + 1 && j>0 && j < size + 1 &&a[i - 1][j - 1] != 'O'&&a[i - 1][j - 1] != 'X')
+				{
+					a[i - 1][j - 1] = 'X';
+					break;
+				}
+				else
+				{
+					printf("输入正确值：");
+					scanf("%d,%d", &i, &j);
+				}
+			}
+			k++;
+			print(a);
+			judge(a, 'X');
+			printf("\n");
+		}
+	}
+}
+int judge(char a[][size],char A)
+{
+	int i, j;
+	for(i=0;i<size-4;i++)
+		for (j = 0; i < size-4; j++)
+		{
+			{
+				if (a[i][j] == A&&a[i][j + 1] == A&&a[i][j + 2] == A&&a[i][j + 3] == A&&a[i][j + 4] == A)
+					printf("本同学获胜！");
+					return 0;
+			}
+			if (a[j][i] == A&&a[j + 1][i] == A&&a[j + 2][i] == A&&a[j + 3][i] == A&&a[j + 4][i] == A)
+			{
+				if (a[i][j] == A&&a[i][j + 1] == A&&a[i][j + 2] == A&&a[i][j + 3] == A&&a[i][j + 4] == A)
+					printf("本同学获胜！");
+					return 0;
+			}
+			if(a[j][j]==A&&a[j+1][j+1]==A&&a[j+2][j+2]==A&&a[j+3][j+3]==A&&a[j+4][j+4]==A)
+			{
+				if (a[i][j] == A&&a[i][j + 1] == A&&a[i][j + 2] == A&&a[i][j + 3] == A&&a[i][j + 4] == A)
+					printf("本同学获胜！");
+					return 0;
+			}
+			if(a[j][size-1-j]==A&&a[j+1][size-2-j]==A&&a[j+2][size-3-j]==A&&a[j+3][size-4-j]==A&&a[j+4][size-5-j]==A)
+			{
+				if (a[i][j] == A&&a[i][j + 1] == A&&a[i][j + 2] == A&&a[i][j + 3] == A&&a[i][j + 4] == A)
+					printf("本同学获胜！");
+					return 0;
+			}
+
+		}
+}
